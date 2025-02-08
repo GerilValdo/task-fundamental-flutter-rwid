@@ -62,7 +62,39 @@ class _ProfilePageState extends State<ProfilePage> {
                       .copyWith(
                           shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8)))),
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          icon: Icon(
+                            Icons.warning_amber_rounded,
+                            size: 70,
+                            color: Colors.red,
+                          ),
+                          title: Text('Logout'),
+                          content: Text(
+                            'Are you sure want to logout?',
+                            textAlign: TextAlign.center,
+                          ),
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text('No')),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pushReplacementNamed(
+                                      context, '/sign-in');
+                                },
+                                child: Text('Yes')),
+                          ],
+                          actionsAlignment: MainAxisAlignment.spaceEvenly,
+                        );
+                      },
+                    );
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
