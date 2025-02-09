@@ -1,14 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import 'widgets/form_login.dart';
+import 'widgets/login_form.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
     double hBody = MediaQuery.of(context).size.height;
     // double wBody = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -32,131 +31,8 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: hBody * 0.03),
-                  FormLogin(
-                    formKey: formKey,
-                  ),
-                  Container(
-                      alignment: Alignment.topRight,
-                      child: TextButton(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return SimpleDialog(
-                                  title: Text('Password Lama'),
-                                  children: [
-                                    Form(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(15),
-                                        child: Column(
-                                          children: [
-                                            TextFormField(
-                                              decoration: InputDecoration(
-                                                label: Text('Password'),
-                                                hintText: 'Masukkan Password',
-                                                border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15)),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 20),
-                                          child: TextButton(
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                                showDialog(
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return SimpleDialog(
-                                                      title:
-                                                          Text('Password Baru'),
-                                                      children: [
-                                                        Form(
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(15),
-                                                            child: Column(
-                                                              children: [
-                                                                TextFormField(
-                                                                  decoration:
-                                                                      InputDecoration(
-                                                                    label: Text(
-                                                                        'Password'),
-                                                                    hintText:
-                                                                        'Masukkan Password',
-                                                                    border: OutlineInputBorder(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(15)),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .end,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .only(
-                                                                      right:
-                                                                          20),
-                                                              child: TextButton(
-                                                                  onPressed:
-                                                                      () {},
-                                                                  child: Text(
-                                                                      'Done')),
-                                                            )
-                                                          ],
-                                                        )
-                                                      ],
-                                                    );
-                                                  },
-                                                );
-                                              },
-                                              child: Text('Next')),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                          child: Text('Forgot Password?'))),
-                  SizedBox(height: hBody * 0.03),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.blue,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Login Berhasil')));
-                          Navigator.pushReplacementNamed(context, "/");
-                        }
-                      },
-                      child: Text('Sign In'),
-                    ),
+                  LoginForm(
+                    hBody: hBody,
                   ),
                   SizedBox(height: hBody * 0.03),
                   Row(
