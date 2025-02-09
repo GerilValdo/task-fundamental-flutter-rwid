@@ -1,14 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import 'widgets/form_register.dart';
+import 'widgets/register_form.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
     double hBody = MediaQuery.of(context).size.height;
     // double wBody = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -32,29 +31,8 @@ class RegisterPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: hBody * 0.03),
-                  FormRegister(
-                    formKey: formKey,
-                  ),
-                  SizedBox(height: hBody * 0.08),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.blue,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Register Berhasil')));
-                          Navigator.pushReplacementNamed(context, '/sign-in');
-                        }
-                      },
-                      child: Text('Sign Up'),
-                    ),
+                  RegisterForm(
+                    hBody: hBody,
                   ),
                   SizedBox(height: hBody * 0.03),
                   Row(

@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
-class FormRegister extends StatefulWidget {
-  final GlobalKey<FormState> formKey;
-
-  const FormRegister({
+class RegisterForm extends StatefulWidget {
+  const RegisterForm({
     super.key,
-    required this.formKey,
+    required this.hBody,
   });
 
+  final double hBody;
   @override
-  State<FormRegister> createState() => _FormRegisterState();
+  State<RegisterForm> createState() => _RegisterFormState();
 }
 
-class _FormRegisterState extends State<FormRegister> {
+class _RegisterFormState extends State<RegisterForm> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   bool isHidden = false;
 
@@ -30,7 +30,7 @@ class _FormRegisterState extends State<FormRegister> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: widget.formKey,
+      key: _formKey,
       child: Column(
         children: [
           TextFormField(
@@ -96,6 +96,27 @@ class _FormRegisterState extends State<FormRegister> {
               }
               return null;
             },
+          ),
+          SizedBox(height: widget.hBody * 0.08),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Register Berhasil')));
+                  Navigator.pushReplacementNamed(context, '/sign-in');
+                }
+              },
+              child: Text('Sign Up'),
+            ),
           ),
         ],
       ),
