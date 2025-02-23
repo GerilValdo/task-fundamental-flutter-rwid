@@ -28,6 +28,7 @@ class _LoginFormState extends State<LoginForm> {
     return Form(
       key: formKey,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           TextFormField(
             controller: _emailController,

@@ -94,9 +94,14 @@ class HomePage extends StatelessWidget {
                             SizedBox(width: 10),
                             Flexible(
                               flex: 3,
-                              child: Image.asset(
-                                'assets/image/image_article.jpg',
-                                fit: BoxFit.contain,
+                              child: Container(
+                                height: 100,
+                                color: Colors.black12,
+                                alignment: Alignment.center,
+                                child: Image.asset(
+                                  'assets/image/image_article.jpg',
+                                  fit: BoxFit.contain,
+                                ),
                               ),
                             )
                           ],

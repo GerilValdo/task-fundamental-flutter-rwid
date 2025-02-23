@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:task_flutter_rwid/core/data/local/objectbox/objectbox.dart';
 
 import 'core/routes/route.dart';
 
-void main() {
+late ObjectBox objectbox;
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  objectbox = await ObjectBox.create();
   runApp(MyApp());
 }
 
