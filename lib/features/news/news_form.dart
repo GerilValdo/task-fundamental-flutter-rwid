@@ -92,6 +92,7 @@ class _NewsFormState extends State<NewsForm> {
                       CustomTextForm(
                         title: 'Title',
                         controller: _titleController,
+                        inputAction: TextInputAction.next,
                       ),
                       CustomTextForm(
                         title: 'Content',
