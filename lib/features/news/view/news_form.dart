@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:objectbox/objectbox.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_flutter_rwid/core/data/entity/news_model.dart';
-import '../../main.dart';
-import './widgets/custom_button.dart';
-import './widgets/custom_text_form.dart';
+import '../bloc/news_bloc.dart';
+import '../widgets/custom_button.dart';
+import '../widgets/custom_text_form.dart';
 
 class NewsForm extends StatefulWidget {
   final NewsModel? news;
@@ -18,7 +18,6 @@ class NewsForm extends StatefulWidget {
 }
 
 class _NewsFormState extends State<NewsForm> {
-  Box<NewsModel> newsBox = objectbox.store.box<NewsModel>();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
   final TextEditingController _categoryController = TextEditingController();
@@ -180,7 +179,11 @@ class _NewsFormState extends State<NewsForm> {
                             imageUrl: _image?.path,
                           );
 
-                          newsBox.put(news);
+                          if (widget.news != null) {
+                            context.read<NewsBloc>().add(UpdateNews(news));
+                          } else {
+                            context.read<NewsBloc>().add(AddNews(news));
+                          }
 
                           setState(() {
                             _titleController.clear();

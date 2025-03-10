@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:task_flutter_rwid/core/data/local/objectbox/objectbox.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'core/data/local/objectbox/objectbox.dart';
 import 'core/routes/route.dart';
+import 'features/news/bloc/news_bloc.dart';
 
 late ObjectBox objectbox;
 void main() async {
@@ -15,10 +17,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/sign-in',
-      routes: routesApp,
+    return BlocProvider(
+      create: (context) => NewsBloc(objectbox)..add(GetNews()),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/sign-in',
+        routes: routesApp,
+      ),
     );
   }
 }

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_flutter_rwid/core/data/entity/news_model.dart';
-import 'package:task_flutter_rwid/main.dart';
-import 'package:task_flutter_rwid/objectbox.g.dart';
-import '../news/news_form.dart';
-import 'package:objectbox/objectbox.dart';
-import '../news/news_card.dart';
+import '../news/bloc/news_bloc.dart';
+import '../news/view/news_form.dart';
+import '../news/view/news_card.dart';
 
 class SavedPage extends StatefulWidget {
   const SavedPage({super.key});
@@ -14,8 +13,6 @@ class SavedPage extends StatefulWidget {
 }
 
 class _SavedPageState extends State<SavedPage> {
-  Box<NewsModel> newsBox = objectbox.store.box<NewsModel>();
-
   void _refresh() {
     setState(() {});
   }
@@ -55,7 +52,7 @@ class _SavedPageState extends State<SavedPage> {
                   ),
                   InkWell(
                     onTap: () {
-                      newsBox.remove(news.id);
+                      context.read<NewsBloc>().add(DeleteNews(news.id));
                       Navigator.pop(context);
                       _refresh();
                     },
@@ -90,27 +87,27 @@ class _SavedPageState extends State<SavedPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<NewsModel> allNews = newsBox.getAll();
     return Scaffold(
       appBar: AppBar(
         leading: SizedBox(),
         title: Text('Saved News'),
         centerTitle: true,
       ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          _refresh();
-        },
-        child: allNews.isEmpty
-            ? Center(
-                child: Text('No Saved News'),
-              )
-            : Padding(
+      body: BlocBuilder<NewsBloc, NewsState>(
+        builder: (context, state) {
+          return switch (state) {
+            NewsLoading() => Center(
+                child: CircularProgressIndicator(),
+              ),
+            NewsError() => Center(
+                child: Text('Error'),
+              ),
+            NewsSuccess() => Padding(
                 padding: EdgeInsets.all(15),
                 child: ListView.builder(
-                  itemCount: allNews.length,
+                  itemCount: state.news.length,
                   itemBuilder: (context, index) {
-                    final news = allNews[index];
+                    final news = state.news[index];
                     return NewsCard(
                       news: news,
                       onLongPress: () => _onLongPress(context, news),
@@ -118,6 +115,8 @@ class _SavedPageState extends State<SavedPage> {
                   },
                 ),
               ),
+          };
+        },
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue,
