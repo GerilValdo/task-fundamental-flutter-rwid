@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:task_flutter_rwid/features/home/home_page.dart';
+import 'package:task_flutter_rwid/features/home/views/home_page.dart';
 import 'package:task_flutter_rwid/features/profile/profile_page.dart';
 import 'package:task_flutter_rwid/features/saved/saved_page.dart';
 

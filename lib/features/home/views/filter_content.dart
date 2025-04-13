@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../core/models/news_articles.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../core/data/entity/news_category.dart';
+import '../bloc/news_api_bloc.dart';
 
 class FilterContent extends StatefulWidget {
   const FilterContent({
@@ -10,7 +12,6 @@ class FilterContent extends StatefulWidget {
 }
 
 class _FilterContentState extends State<FilterContent> {
-  var newsArticles = NewsArticles().newsArticles;
   int _selectedIndex = -1;
   @override
   Widget build(BuildContext context) {
@@ -37,6 +38,7 @@ class _FilterContentState extends State<FilterContent> {
               onPressed: () {
                 setState(() {
                   _selectedIndex = -1;
+                  context.read<NewsApiBloc>().add(LoadNews());
                 });
               },
               child: Text("All"),
@@ -64,9 +66,13 @@ class _FilterContentState extends State<FilterContent> {
                     onPressed: () {
                       setState(() {
                         _selectedIndex = index;
+                        context.read<NewsApiBloc>().add(LoadNews(
+                              selectedCategories:
+                                  NewsCategory.values[index].label,
+                            ));
                       });
                     },
-                    child: Text(newsArticles[index]['category']!)),
+                    child: Text(NewsCategory.values[index].label)),
               );
             },
           )
