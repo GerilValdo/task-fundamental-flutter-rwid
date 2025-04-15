@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_flutter_rwid/features/main/main_screen.dart';
+import '../../features/detail/detail_page.dart';
 import '../../features/profile/profile_page.dart';
 import '../../features/saved/saved_page.dart';
 import '../../features/home/views/home_page.dart';
@@ -14,5 +15,6 @@ Map<String, Widget Function(BuildContext)> routesApp = {
   '/profile-page': (context) => ProfilePage(),
   '/sign-in': (context) => LoginPage(),
   '/sign-up': (context) => RegisterPage(),
+  '/detail-page': (context) => DetailPage(),
   // '/news-form': (context) => NewsForm(),
 };

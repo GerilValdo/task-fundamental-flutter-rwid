@@ -8,6 +8,7 @@ import 'features/home/bloc/news_api_bloc.dart';
 import 'features/news/bloc/news_bloc.dart';
 
 late ObjectBox objectbox;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   objectbox = await ObjectBox.create();

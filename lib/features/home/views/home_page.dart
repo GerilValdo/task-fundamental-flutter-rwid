@@ -127,75 +127,83 @@ class _HomePageState extends State<HomePage> {
                               );
                             }
                             final news = state.news[index];
-                            return Container(
-                              margin: EdgeInsets.only(bottom: 13),
-                              padding: EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                  color: Colors.white60,
-                                  boxShadow: [
-                                    BoxShadow(
-                                        blurRadius: 3,
-                                        color: Colors.black12,
-                                        offset: Offset(0, 6),
-                                        spreadRadius: 3)
-                                  ],
-                                  borderRadius: BorderRadius.circular(15)),
-                              child: Row(
-                                children: [
-                                  Flexible(
-                                    flex: 4,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                          height: heightBody * 0.04,
-                                          child: Chip(
-                                            padding: EdgeInsets.zero,
-                                            shape: RoundedRectangleBorder(
-                                                side: BorderSide(
-                                                    color: Colors.blue),
-                                                borderRadius:
-                                                    BorderRadius.circular(20)),
-                                            label: Text(
-                                              news.author ?? '',
-                                              overflow: TextOverflow.clip,
+                            return InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, '/detail-page',
+                                    arguments: news);
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 13),
+                                padding: EdgeInsets.all(15),
+                                decoration: BoxDecoration(
+                                    color: Colors.white60,
+                                    boxShadow: [
+                                      BoxShadow(
+                                          blurRadius: 3,
+                                          color: Colors.black12,
+                                          offset: Offset(0, 6),
+                                          spreadRadius: 3)
+                                    ],
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Row(
+                                  children: [
+                                    Flexible(
+                                      flex: 4,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            height: heightBody * 0.04,
+                                            child: Chip(
+                                              padding: EdgeInsets.zero,
+                                              shape: RoundedRectangleBorder(
+                                                  side: BorderSide(
+                                                      color: Colors.blue),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              label: Text(
+                                                news.author ?? '',
+                                                overflow: TextOverflow.clip,
+                                              ),
+                                              labelStyle: TextStyle(
+                                                  color: Colors.blue,
+                                                  fontSize: 12),
                                             ),
-                                            labelStyle: TextStyle(
-                                                color: Colors.blue,
-                                                fontSize: 12),
                                           ),
-                                        ),
-                                        Text(
-                                          news.title ?? '',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          news.date ?? '',
-                                          style: TextStyle(
-                                            fontSize: 11,
-                                            color: Colors.grey,
+                                          Text(
+                                            news.title ?? '',
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(width: 10),
-                                  Flexible(
-                                    flex: 3,
-                                    child: Container(
-                                      height: 100,
-                                      color: Colors.black12,
-                                      alignment: Alignment.center,
-                                      child: Image.network(
-                                        news.imageUrl ?? '',
-                                        fit: BoxFit.contain,
+                                          Text(
+                                            news.date ?? '',
+                                            style: TextStyle(
+                                              fontSize: 11,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  )
-                                ],
+                                    SizedBox(width: 10),
+                                    Flexible(
+                                      flex: 3,
+                                      child: Container(
+                                        height: 100,
+                                        color: Colors.black12,
+                                        alignment: Alignment.center,
+                                        child: Image.network(
+                                          news.imageUrl ??
+                                              'https://picsum.photos/id/41/200/300',
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             );
                           },

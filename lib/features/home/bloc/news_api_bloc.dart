@@ -29,11 +29,11 @@ class NewsApiBloc extends Bloc<NewsApiEvent, NewsApiState> {
 
   Future<void> _onLoadNews(LoadNews event, Emitter<NewsApiState> emit) async {
     _currentCategory = event.selectedCategories;
-    if (_currentCategory != event.selectedCategories) {
-      _page = 1;
-      _hasReachedMax = false;
-      _currentCategory = event.selectedCategories;
-    }
+    // if (_currentCategory != event.selectedCategories) {
+    //   _currentCategory = event.selectedCategories;
+    // }
+    _page = 1;
+    _hasReachedMax = false;
     if (event.isRefresh) {
       _page = 1;
       _hasReachedMax = false;

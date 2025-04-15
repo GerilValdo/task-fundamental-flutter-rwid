@@ -3,12 +3,14 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:task_flutter_rwid/env.dart';
 
+import '../../../helpers/encryption_helper.dart';
 import '../../entity/news_dio_model.dart';
 import '../../../helpers/dio_helper.dart';
 
 class DioRepository {
-  final int _pageSize = 3;
-  final apiKeyNews = Env.apiKey;
+  final int _pageSize = 5;
+  final apiKeyNews = EncryptionHelpers.decrypt(Env.apiKey);
+  // final apiKeyNews = '1b24593390244df9b895aa1df23cd1f6';
   final dioHelper =
       DioHelper(baseUrl: 'https://newsapi.org/v2/top-headlines?country=us');
 

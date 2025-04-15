@@ -10,5 +10,6 @@ part of 'env.dart';
 // ignore_for_file: type=lint
 // generated_from: .env
 final class _Env {
-  static const String apiKey = '1b24593390244df9b895aa1df23cd1f6';
+  static const String apiKey =
+      'F0gVbHP7cTGluDFuGduMw/bSQa1go9nENY4St/++IOEoZ8t8LCRx3b+3T2h7UV5C';
 }
