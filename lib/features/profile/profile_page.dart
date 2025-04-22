@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../auth/bloc/auth_bloc.dart';
 import './widgets/menu_profile_page.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -41,10 +44,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 ListTile(
                   title: Center(
                       child: Text(
-                    'Geril Valdo Jatsiah Manday',
+                    FirebaseAuth.instance.currentUser?.displayName ?? '',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   )),
-                  subtitle: Center(child: Text('gerilmanday@gmail.com')),
+                  subtitle: Center(
+                      child:
+                          Text(FirebaseAuth.instance.currentUser?.email ?? '')),
                 ),
                 SizedBox(height: 15),
                 Divider(
@@ -85,10 +90,29 @@ class _ProfilePageState extends State<ProfilePage> {
                                 child: Text('No')),
                             TextButton(
                                 onPressed: () {
-                                  Navigator.pushReplacementNamed(
-                                      context, '/sign-in');
+                                  context.read<AuthBloc>().add(LogoutEvent());
                                 },
-                                child: Text('Yes')),
+                                child: BlocListener<AuthBloc, AuthState>(
+                                  listener: (context, state) {
+                                    if (state is AuthSuccess) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content:
+                                                  Text('Logout Berhasil')));
+                                      Navigator.pushReplacementNamed(
+                                          context, '/sign-in');
+                                    }
+                                    if (state is AuthError) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content: Text(state.message)));
+                                    }
+                                    if (state is AuthLoading) {
+                                      CircularProgressIndicator();
+                                    }
+                                  },
+                                  child: Text('Yes'),
+                                )),
                           ],
                           actionsAlignment: MainAxisAlignment.spaceEvenly,
                         );

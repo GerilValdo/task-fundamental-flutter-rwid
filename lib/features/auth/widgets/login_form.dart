@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/auth_bloc.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key, required this.hBody});
@@ -190,11 +193,15 @@ class _LoginFormState extends State<LoginForm> {
                 ),
               ),
               onPressed: () {
-                if (formKey.currentState!.validate()) {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text('Login Berhasil')));
-                  Navigator.pushReplacementNamed(context, "/");
+                if (!formKey.currentState!.validate()) {
+                  return;
                 }
+                context.read<AuthBloc>().add(LoginEvent(
+                    email: _emailController.text,
+                    password: _passwordController.text));
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text('Login Berhasil')));
+                Navigator.pushReplacementNamed(context, "/");
               },
               child: Text('Sign In'),
             ),

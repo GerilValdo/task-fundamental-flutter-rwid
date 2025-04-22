@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/auth_bloc.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({
@@ -34,6 +37,7 @@ class _RegisterFormState extends State<RegisterForm> {
       child: Column(
         children: [
           TextFormField(
+            controller: _nameController,
             keyboardType: TextInputType.name,
             decoration: InputDecoration(
               label: Text('Name'),
@@ -50,6 +54,7 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
           SizedBox(height: 15),
           TextFormField(
+            controller: _emailController,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
               label: Text('Email'),
@@ -69,6 +74,7 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
           SizedBox(height: 15),
           TextFormField(
+            controller: _passwordController,
             keyboardType: TextInputType.visiblePassword,
             obscureText: isHidden,
             decoration: InputDecoration(
@@ -109,13 +115,31 @@ class _RegisterFormState extends State<RegisterForm> {
                 ),
               ),
               onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Register Berhasil')));
-                  Navigator.pushReplacementNamed(context, '/sign-in');
+                if (!_formKey.currentState!.validate()) {
+                  return;
                 }
+                context.read<AuthBloc>().add(RegisterEvent(
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                    name: _nameController.text));
               },
-              child: Text('Sign Up'),
+              child: BlocListener<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  if (state is AuthSuccess) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Register Berhasil')));
+                    Navigator.pushReplacementNamed(context, '/sign-in');
+                  }
+                  if (state is AuthError) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text(state.message)));
+                  }
+                  if (state is AuthLoading) {
+                    CircularProgressIndicator();
+                  }
+                },
+                child: Text('Sign Up'),
+              ),
             ),
           ),
         ],

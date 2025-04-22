@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'bloc/auth_bloc.dart';
 import 'widgets/login_form.dart';
 
 class LoginPage extends StatelessWidget {
@@ -69,20 +71,38 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/');
+                      context
+                          .read<AuthBloc>()
+                          .add(GoogleSignInRequestedEvent());
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/image/google.png',
-                          fit: BoxFit.contain,
-                          height: 25,
-                          width: 25,
-                        ),
-                        SizedBox(width: 10),
-                        Text('Sign Up With Google'),
-                      ],
+                    child: BlocListener<AuthBloc, AuthState>(
+                      listener: (context, state) {
+                        if (state is AuthSuccess) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('SignIn Berhasil')));
+                          Navigator.pushReplacementNamed(context, '/');
+                        }
+                        if (state is AuthError) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(state.message)));
+                        }
+                        if (state is AuthLoading) {
+                          CircularProgressIndicator();
+                        }
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/image/google.png',
+                            fit: BoxFit.contain,
+                            height: 25,
+                            width: 25,
+                          ),
+                          SizedBox(width: 10),
+                          Text('Sign Up With Google'),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(

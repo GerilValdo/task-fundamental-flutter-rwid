@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:task_flutter_rwid/core/data/remote/dio/dio_repository.dart';
@@ -78,7 +79,8 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         ListTile(
                           textColor: Colors.white,
-                          title: Text('Welcome Back, Valdo!'),
+                          title: Text(
+                              'Welcome Back, ${FirebaseAuth.instance.currentUser?.displayName ?? ''}!'),
                           subtitle: Text(
                               'Discover a world of news that matter to you'),
                           titleTextStyle: TextStyle(
