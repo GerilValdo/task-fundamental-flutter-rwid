@@ -9,6 +9,22 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file("upload-keystore.jks")
+            storePassword project.properties['KEYSTORE_PASSWORD'] ?: ""
+            keyAlias "upload"
+            keyPassword project.properties['KEY_PASSWORD'] ?: ""
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+        }
+    }
     namespace = "com.example.task_flutter_rwid"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "28.0.13004108"
